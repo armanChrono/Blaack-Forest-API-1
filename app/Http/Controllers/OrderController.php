@@ -36,6 +36,8 @@ class OrderController extends Controller
 
     public function submitOrder(Request $request)
     {
+        Log::info("request" .$request);
+
         try {
         $input = $request->all();
         if($input['delivery_mode'] == 'Door Step Delivery'){
@@ -101,6 +103,8 @@ class OrderController extends Controller
         }
 
         $cartCount = $this-> calculateCartCount($input['customer_id']);
+        Log::info("cartCount" .$cartCount);
+
         event(new MyEvent("New Order Placed", $productName, $firstImage, $successOrderId));
 
             return $this->response->jsonResponse(false, 'Order SuccessFully Placed', $cartCount, 201);

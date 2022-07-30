@@ -106,6 +106,8 @@ Route::get('logout/{customer_id}', 'CustomerController@logout');
 Route::get('webSearch/{search}', 'SearchController@webSearch');
 Route::post('addToCart', 'CartController@addToCart');
 
+Route::get('webSearch/{search}', 'HomeController@webSearch');
+
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
 
@@ -235,6 +237,12 @@ Route::get('generateCreditMemo/{orderId}', 'PDFController@creditMemo');
     Route::apiResource('banner', 'BannerController');
     Route::get('bannerSwitch/{id}', 'BannerController@bannerSwitch');
     Route::post('imageUpdateBanner', 'BannerController@imageUpdateBanner');
+
+    //Card
+    Route::apiResource('card', 'ViewCardController');
+    Route::get('cardSwitch/{id}', 'ViewCardController@cardSwitch');
+    Route::post('imageUpdateCard', 'ViewCardController@imageUpdateCard');
+    Route::get('searchCard/{search}', 'ViewCardController@searchCard');
 
     //latest-Arrival
      Route::apiResource('latestArrival', 'LatestArrivalController');

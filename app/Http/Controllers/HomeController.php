@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\ViewCard;
 use App\Models\Banner;
 use App\Models\MobileBanner;
 use App\Models\SubCategory;
 use App\Models\Product;
+use App\Models\ProductImage;
+use App\Models\ProductTag;
 use App\Models\LinkProduct;
 use App\Models\ProductDiscont;
 use App\Models\CategoryDiscont;
@@ -60,15 +63,20 @@ class HomeController extends Controller
         return Category::has('subCategories')->with('subCategories:id,category_id,sub_category_name,sub_category_slug,sub_category_image')->select('id', 'category_name', 'category_slug', 'category_image')->where('active_status', 1)->get();
     }
 
-
-
     public function getHomeData() {
         $data['banners'] = $this->getBanners();
         $data['mobileBanners'] = $this->getMobileBanners();
         $data['getCategorySC'] = $this->getCategorySC();
         $data['latestArrival'] = LatestArrival::all();
+        $data['cardsDetails'] = ViewCard::all();
         return $this->response->jsonResponse(false, 'Home Data Listed Successfully', $data, 201);
 
+    }
+    public function webSearch($search) {
+        Log::info('search =='.$search);
+        $Search = Product::with('subCategory','images', 'unit', 'variation','category')->latest()->search($search)->get();
+        $data['products'] = $Search;
+        return $this->response->jsonResponse(false, 'Web Search Listed Successfully', $data, 201);
     }
 
      public function getProducts($slug, $regionId = null, $customerId = null) {
