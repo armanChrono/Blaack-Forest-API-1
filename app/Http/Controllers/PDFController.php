@@ -18,7 +18,7 @@ class PDFController extends Controller
     {
         $order = Order::where('order_id', $orderId)->with('region.City', 'region.state','orderedAddress', 'orderedAddons', 'orderedAddons.tax' ,'orderedProducts.productDetails.tax','orderedProducts.productDetails.unit','orderedProducts.flavour', 'orderedProducts.variation.weight', 'orderGstMerge', 'shops')->first();
         // Log::info("data ".json_encode($order));
-        $pdf = PDF::loadView('invoice-pdf', $order->toArray());
+        $pdf = PDF::loadView('invoice-pdf1', $order->toArray());
 
         return $pdf->download('nicesnippets.pdf');
     }
