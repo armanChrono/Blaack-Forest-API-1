@@ -72,13 +72,6 @@ class HomeController extends Controller
         return $this->response->jsonResponse(false, 'Home Data Listed Successfully', $data, 201);
 
     }
-    public function webSearch($search) {
-        Log::info('search =='.$search);
-        $Search = Product::with('subCategory','images', 'unit', 'variation','category')->latest()->search($search)->get();
-        $data['products'] = $Search;
-        return $this->response->jsonResponse(false, 'Web Search Listed Successfully', $data, 201);
-    }
-
      public function getProducts($slug, $regionId = null, $customerId = null) {
         $productId = [];
             if($customerId != 'null'){
@@ -109,11 +102,9 @@ class HomeController extends Controller
         if( $regionId != "null"){
             $products->whereIn('id', $productId);
         }
-        
 
          $data['products'] = $products->get();
 
- 
          foreach ($data['products'] as $key => $product){
              if($product->product_discount != 0 && $product->category_discount == 0){
                 foreach($product->variation as $vars => $variation){

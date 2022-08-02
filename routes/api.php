@@ -103,10 +103,8 @@ Route::post('register', 'CustomerController@register');
 Route::post('login', 'CustomerController@login');
 Route::get('logout/{customer_id}', 'CustomerController@logout');
 
-Route::get('webSearch/{search}', 'SearchController@webSearch');
 Route::post('addToCart', 'CartController@addToCart');
 
-Route::get('webSearch/{search}', 'HomeController@webSearch');
 
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
